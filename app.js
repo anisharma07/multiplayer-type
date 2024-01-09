@@ -6,6 +6,7 @@ const { join } = require("node:path");
 const app = express();
 const server = createServer(app);
 const { Server } = require("socket.io");
+const PORT = process.env.PORT || 3000;
 const { get } = require("http");
 const io = new Server(server);
 // import { users, userJoin } from "./utils/functions";
@@ -97,6 +98,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3000, () => {
+server.listen(PORT, () => {
   console.log("server running at http://localhost:3000");
 });
