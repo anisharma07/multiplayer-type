@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello World1</title>
+  </head>
+  <body>
+    <!-- <script src="js/index.js"></script> -->
+    <script>
+            const form = document.querySelector("form");
+            const input = document.querySelector("input");
+            window.onload = function() {
+         input.focus();
+      };
+            form.addEventListener("submit", function(e){
+              e.preventDefault();
+
+              if(input.value){
+                form.submit();
+              }
+            })
+    </script>
+  </body>
+</html>

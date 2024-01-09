@@ -1,0 +1,129 @@
+/* CSS */
+:root {
+  --bgColor: #2e3532;
+  --textPrimary: #72b01d;
+  --textSecondary: #666;
+  --primaryColor: #d7dedc;
+  --redIncorrect: #6b0504;
+  --redBackground: #db6c79;
+}
+.player-status {
+  position: absolute;
+  bottom: -46px;
+  right: 0px;
+  z-index: 1;
+}
+.ready-btn {
+  align-items: center;
+  appearance: none;
+  background-color: #fcfcfd;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395a;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
+}
+
+.ready-btn:focus {
+  box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+}
+
+.ready-btn:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.ready-btn:active {
+  box-shadow: #d6d6e7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+.countdown {
+  border: 2px solid var(--textPrimary);
+  color: var(--textPrimary);
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.middle-container {
+  margin-top: 280px;
+}
+.progress-bar-container {
+  height: 240px;
+  overflow-y: scroll;
+  margin-top: 20px;
+}
+.progress-space {
+  width: 70%;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  position: absolute;
+  bottom: -11px;
+  left: 0;
+  right: 0;
+  height: 330px;
+  text-align: center;
+  margin: auto;
+  user-select: none;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+/* Basic Progress Bar Styling */
+.progress-bar {
+  width: 80%;
+  text-align: center;
+  margin: auto;
+  background-color: var(--primaryColor);
+  border-radius: 5px;
+  padding: 3px;
+  position: relative;
+  margin-bottom: 13px;
+}
+
+.player-name {
+  position: absolute;
+  top: 1px;
+  left: -41px;
+}
+.bar-thumb {
+  height: 40px;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #4caf50, #ffc107);
+  transition: width 0.5s ease;
+  width: 0%;
+}
+@media (width<=671px) {
+  .progress-space {
+    width: 100%;
+  }
+}
+.hidden {
+  display: none;
+}

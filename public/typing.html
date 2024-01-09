@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=yes" />
+    <title>KangarooType | Speed typing game</title>
+    <!-- box icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> 
+    <!-- favicon.png -->
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <!-- custom Stylesheet -->
+    <link rel="stylesheet" href="css/game.css" />
+  </head>
+  <body>
+<div class="notifications">
+  <ul class="join-left-message">
+
+  </ul>
+</div>
+<div class="container-holder">
+  <header class="topHeader">
+    <div class="header">
+
+<div class="myBrand headerLogos">  <img src="images/logo2.png" alt="logo" class="myBrandLogo"><h3> kangarooType</h3></div>
+<div class="leftHeaderContent headerLogos">
+<div class="leaderboard-button">
+  <img src="images/ranking.png" alt="" class="leaderboard-logo"><h3>LeaderBoard</h3>
+</div>
+
+<div class="userProfileButton">
+  <h6 class="profileToggleButton"> <i class='bx bxs-user-circle'></i> Profile</h6>
+  <div class="userProfile hidden">
+    <button class="close-profile">&times;</button>
+  <div class="userProfileArrow"></div>
+    <div class="flexProfile">
+     <ul class="all-users">
+      
+     </ul>
+    </div>
+
+  </div>
+</div>
+
+</div>
+    </div>
+  </header>
+
+<div class="middle-container">
+<!-- main text container -->
+    <div class="timer">
+      <div class="timerClass">
+        <h3><strong class="stopwatch">00:00</strong></h3>
+      </div>
+      <div class="showWpm details hidden">
+        <h3>Score: <strong id="wordsPerMinute">0</strong> wpm</h3>
+      </div>
+      <!-- <div class="characters details hidden">
+        <h3>Characters: <strong id = "charactersTyped"></strong></h3>
+      </div> -->
+      
+      <div class="dropdown hidden">
+        <h3>Level:</h3>
+        <select name="cars" id="DifficultySelect">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="caps-lock hidden">
+      <p><i class='bx bxs-lock-alt'></i> Caps Lock</p></div>
+      <div class="text-content-div">
+        <p id="text-content">
+          <div id="cursor"></div>
+          <!-- <div class="blinking-crsor"></div> -->
+        </p>
+      </div>
+      <input
+      type="text"
+      class="input-field"
+      autocorrect="off"
+      autocapitalize="off"
+      autocomplete="off"
+    />
+    </div>
+<!-- <br> -->
+    <div class="try-again tryAgainDom">
+      <i class="bx bx-reset">
+        <div class="dialog-box">
+          <div class="arrow"></div>
+          <p>Restart.</p></div>
+      </i>
+    </div>
+</div>
+
+  <!-- footer -->
+  <footer>
+    <p>Copyright &copy; <span class="CopyrightDate"></span></p>
+</footer>
+
+</div>
+  
+
+
+
+  <!-- absolute -->
+    <!-- modal -->
+    <div class="modal hidden">
+      <button class="close-modal">&times;</button>
+      <div class="flexbar">
+        <div class="modalHeading">
+          <h1>SUMMARY</h1>
+        </div>
+        <div class="wordsCount details">
+          <h3>Score: <strong id="modalWordsPerMinute">0</strong> wpm</h3>
+        </div>
+        
+        <div class="timerClass details">
+          <h3>Time: <strong class="modalTime">00:00</strong></h3>
+        </div>
+
+      <div class="chk_accuracy details">
+      <h3 class="acurate">Accuracy: <strong id="modalAccuracy">0</strong></h3>
+      </div>
+      <div class="details modalCharacter">
+        <h3>Characters: <strong id="modalCharacters">0</strong></h3>
+      </div>
+      <div class="HighScore details">
+        <h3>HighScore: <strong id="modalHighScore">0</strong> wpm</h3>
+      </div>
+      
+      <div class="btn details tryAgainDom"><h3>Try again!!</h3></div>
+      </div>
+    </div>
+    <!-- //********************Leaderboard-menu*********************** -->
+    <div class="leader-board-menu hidden">
+      <!-- //******************** Leader-Board-Headings*********************** -->
+      <div class="leaderboard-heading">
+        <img src="images/win.png" alt="winner" class="winner-logo">
+        <h1>LeaderBoard</h1>
+        <button class="close-leaderboard">&times;</button>
+      </div>
+      <!-- //********************Leaderboard-rankings*********************** -->
+    <div class="player-rankings"></div>
+    </div>
+       <!-- blur modal background -->
+    <div class="overlay hidden"></div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- <script src="js/index.js"></script> -->
+    <script src="js/quotes.js"></script>
+    <!-- <script src="js/typing.js"></script> -->
+    <script src="js/encodedtype.js"></script>
+  </body>
+  </html>
+  
