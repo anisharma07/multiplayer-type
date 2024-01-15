@@ -173,6 +173,24 @@
   top: 13px;
   left: 7px;
 }
+.userProfileButton {
+  position: absolute;
+  top: -5px;
+  right: 0px;
+}
+@media (448px<width<=671px) {
+  .userProfileButton {
+    position: absolute;
+    top: 2px;
+    right: 69px;
+  }
+}
+@media (width<448px) {
+  .userProfileButton {
+    top: 51px;
+    /* right: 0px; */
+  }
+}
 .hidden {
   display: none;
 }

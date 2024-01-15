@@ -23,76 +23,78 @@
   <body>
     <div class="container-holder">
       <header class="topHeader">
+        <div id="sound-system" class="sound-system hidden">
+          <div>
+            <p>Type sound:</p>
+            <select name="audio" id="soundSelect" class="sound-options">
+              <option value="typeshoot.wav">Typewriter</option>
+              <option value="jump-game.wav">jump-game</option>
+              <option value="bullet-hit.mp3">silent bullet</option>
+              <option value="can-opening.mp3">can opening</option>
+              <option value="bullet.mp3">bullet-hit</option>
+              <option value="sniper.mp3">sniper</option>
+              <option value="empty_gun.mp3">empty-gun</option>
+              <option value="laser.mp3">laser</option>
+              <option value="whizzby.mp3">whizzby</option>
+              <option value="typewrite.wav">Tap</option>
+              <option value="plasmablaster.mp3">plasma blast</option>
+              <option value="game-click.wav">game-click</option>
+              <option value="game-notification.wav">game-notification</option>
+              <option value="casino-notification.wav">
+                casino-notification
+              </option>
+              <option value="water-droplet.mp3">droplet</option>
+              <option value="steam_burst.mp3">steam_burst</option>
+              <option value="camera-shutter.mp3">camera-shutter</option>
+            </select>
+          </div>
+          <div>
+            <p>Error sound:</p>
+            <select name="audio" id="errorSoundSelect" class="sound-options">
+              <option value="click-error.wav">click-error</option>
+              <option value="negative-error.wav">negative</option>
+              <option value="click-melodic.wav">click-melodic</option>
+              <option value="error.mp3">error</option>
+            </select>
+          </div>
+          <div>
+            <label for="vol">Volume:</label>
+            <input type="range" id="volu" name="volu" min="0" max="100" />
+          </div>
+        </div>
+        <h3 class="sound-btn">🔉</h3>
         <div class="header">
           <div class="myBrand headerLogos">
             <img src="images/logo2.png" alt="logo" class="myBrandLogo" />
             <h3>kangarooType</h3>
           </div>
-          <div id="sound-system" class="sound-system hidden">
-            <div>
-              <p>Type sound:</p>
-              <select name="audio" id="soundSelect" class="sound-options">
-                <option value="typeshoot.wav">Typewriter</option>
-                <option value="jump-game.wav">jump-game</option>
-                <option value="bullet-hit.mp3">silent bullet</option>
-                <option value="can-opening.mp3">can opening</option>
-                <option value="bullet.mp3">bullet-hit</option>
-                <option value="sniper.mp3">sniper</option>
-                <option value="empty_gun.mp3">empty-gun</option>
-                <option value="laser.mp3">laser</option>
-                <option value="whizzby.mp3">whizzby</option>
-                <option value="typewrite.wav">Tap</option>
-                <option value="plasmablaster.mp3">plasma blast</option>
-                <option value="game-click.wav">game-click</option>
-                <option value="game-notification.wav">game-notification</option>
-                <option value="casino-notification.wav">
-                  casino-notification
-                </option>
-                <option value="water-droplet.mp3">droplet</option>
-                <option value="steam_burst.mp3">steam_burst</option>
-                <option value="camera-shutter.mp3">camera-shutter</option>
-              </select>
-            </div>
-            <div>
-              <p>Error sound:</p>
-              <select name="audio" id="errorSoundSelect" class="sound-options">
-                <option value="click-error.wav">click-error</option>
-                <option value="negative-error.wav">negative</option>
-                <option value="click-melodic.wav">click-melodic</option>
-                <option value="error.mp3">error</option>
-              </select>
-            </div>
-            <div>
-              <label for="vol">Volume:</label>
-              <input type="range" id="volu" name="volu" min="0" max="100" />
-            </div>
-          </div>
-          <h3 class="sound-btn">🔉</h3>
-          <div class="leftHeaderContent headerLogos">
-            <div class="userProfileButton">
-              <h6 class="profileToggleButton">
-                <i class="bx bxs-user-circle"></i> Profile
-              </h6>
-              <div class="userProfile hidden">
-                <button class="close-profile">&times;</button>
-                <div class="userProfileArrow"></div>
-                <div class="flexProfile">
-                  <div>
-                    <img
-                      src="images/profile.jpg"
-                      alt="user-image"
-                      class="user-profile-image"
-                    />
-                    <h4>Guest</h4>
-                  </div>
-                  <div class="profile-details">
-                    <p class="firstPara">
-                      High Score: <strong id="highestScore">0</strong>wpm
-                    </p>
-                  </div>
+          
+          
+          <div class="userProfileButton">
+            <h6 class="profileToggleButton">
+              <i class="bx bxs-user-circle"></i> Profile
+            </h6>
+            <div class="userProfile hidden">
+              <button class="close-profile">&times;</button>
+              <div class="userProfileArrow"></div>
+              <div class="flexProfile">
+                <div>
+                  <img
+                    src="images/profile.jpg"
+                    alt="user-image"
+                    class="user-profile-image"
+                  />
+                  <h4>Guest</h4>
+                </div>
+                <div class="profile-details">
+                  <p class="firstPara">
+                    High Score: <strong id="highestScore">0</strong>wpm
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="leftHeaderContent headerLogos">
           </div>
         </div>
       </header>
@@ -232,6 +234,6 @@
     <div class="overlay hidden"></div>
     <div class="transparent-overlay hidden"></div>
 
-    <script src="js/home.js"></script>
+    <script src="js/index.js"></script>
   </body>
 </html>

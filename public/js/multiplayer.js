@@ -36,7 +36,7 @@ const cursor = document.getElementById("cursor");
 const contentDiv = document.querySelector(".text-content-div");
 const letterContainer = document.querySelector(".container");
 const CapsLock = document.querySelector(".caps-lock");
-const bar = document.querySelector(".bar-thumb");
+const bar = document.querySelector("#progress-you");
 const correctSong = document.querySelector("#soundSelect");
 const errorSong = document.querySelector("#errorSoundSelect");
 const volume = document.querySelector("#volu");
@@ -50,7 +50,7 @@ document.querySelector(".CopyrightDate").innerHTML = new Date().getFullYear(); /
 // 2. variables
 let correctSpans = 0;
 let timer = 0;
-let timeInc = timer;
+let timeInc = 0;
 let i = 0;
 let isTyping = false;
 let words;
@@ -170,7 +170,6 @@ function fetchQuote() {
   addClass(document.querySelector(".letter"), "current");
 }
 
-// 3. Toggle modal window
 function closeModalFunction() {
   if (!modal.classList.contains("hidden")) {
     modal.classList.add("hidden");
@@ -191,7 +190,7 @@ function closeModalFunction() {
     transparentOverlay.classList.add("hidden");
   }
 }
-// 4. add or remove Class
+
 function addClass(el, classname) {
   el.classList.add(classname);
 }
@@ -199,14 +198,13 @@ function removeClass(el, name) {
   el.className = el.className.replace(name, "");
 }
 
-// 5a. Summary
 function showSummary() {
   modal.classList.remove("hidden");
   overlay.classList.remove("hidden");
   showWPM.classList.remove("hidden");
   let actualAccuracy = Math.floor(100 - (mistakes / quoteLength) * 100);
   modalwordsCounter.innerHTML = wpm;
-  modalTime.innerHTML = `${timeInc}s`;
+  modalTime.innerHTML = `${Math.floor(timeTaken / 1000)}s`;
   modalAccuracy.innerHTML = `${actualAccuracy > 0 ? actualAccuracy : "0"}%`;
   modalCharacters.innerHTML = `<span style="color: #d4d4d4;">${counter}</span>/${
     quoteLength + noOfWords - 1
@@ -215,32 +213,31 @@ function showSummary() {
   wordsCounter.innerHTML = wpm;
 }
 
-// 5b. end game
 function endGame() {
+  clearInterval(timer);
+  console.log("cleared interval");
   inpField.removeEventListener("input", initTyping);
   inpField.disabled = true;
   typingText.style.marginTop = "";
   cursor.style.display = "none";
-  clearInterval(timer);
+
   leftHeaderContent.classList.remove("hidden");
   header.style.justifyContent = null;
   contentDiv.style.overflow = "auto";
+  sendProgress();
   getWPM();
   showSummary();
   sendUsernameAndHighScore();
   showOnGameEnd();
 }
 
-// 5c. new game
 function newGame() {
   if (leftHeaderContent.classList.contains("hidden")) {
     leftHeaderContent.classList.remove("hidden");
     header.style.justifyContent = null;
   }
-  inpField.disabled = false;
   progress = 0;
   bar.style.width = "0%";
-  clearInterval(timer);
   cursor.style.display = "";
   cursor.style.animation = "blink 1.2s infinite";
   cursor.style.top = "30.2504px";
@@ -250,10 +247,10 @@ function newGame() {
   fetchQuote();
   addClass(document.querySelector(".word"), "current");
   addClass(document.querySelector(".letter"), "current");
-  timeInc = 0;
+  timeInc = 120;
   timer = 0;
   wpm = 0;
-  timeWatch.innerText = `00:00`;
+  timeWatch.innerText = `02:00`;
   i = 0;
   counter = 0;
   mistakes = 0;
@@ -267,7 +264,6 @@ function newGame() {
   typingText.style.marginTop = "";
 }
 
-// 6. getWPM
 function getWPM() {
   timeTaken = new Date() - timeTaken;
   wpm = Math.round((counter / 5) * (60000 / timeTaken));
@@ -277,7 +273,6 @@ function getWPM() {
   }
 }
 
-// 7.space
 function spacePressed() {
   const isFirstLetter = currentLetter === currentWord.firstChild;
   inpField.value = "";
@@ -308,7 +303,9 @@ function spacePressed() {
       addClass(currentWord.nextSibling.firstChild, "current");
     } else {
       getprogress();
+      console.log("ending game");
       endGame();
+      console.log("game Ended");
     }
     cursor.style.transition = "top 0.08s linear, left 0.08s linear";
     getLineAndCursor();
@@ -317,7 +314,7 @@ function spacePressed() {
     playWrong();
   }
 }
-// 8. backspace
+
 function backspacePressed() {
   currentWord = document.querySelector(".word.current");
   currentLetter = document.querySelector(".letter.current");
@@ -334,9 +331,6 @@ function backspacePressed() {
       removeClass(currentLetter, "current");
       addClass(previousWord, "current");
       currentWord = document.querySelector(".current");
-      // if (currentWord.lastChild.classList.contains("extra")) {
-      //   currentWord.lastChild.remove();
-      // }
       progress--;
       if (!previousWord.lastChild.classList.contains("missed")) {
         counter--;
@@ -373,7 +367,6 @@ function backspacePressed() {
   getLineAndCursor();
 }
 
-// 9. getting cursor and LINES
 function getLineAndCursor() {
   const containerDivRect = letterContainer.getBoundingClientRect();
   const nextLetter = document.querySelector(".letter.current");
@@ -382,7 +375,6 @@ function getLineAndCursor() {
   const parentDivRect = contentDiv.getBoundingClientRect();
   const parentRelativeTop = nextWordRect.top - parentDivRect.top;
   const relativeTop = nextWordRect.top - containerDivRect.top;
-  //getting cursor
   cursor.style.top =
     (nextLetter || nextWord).getBoundingClientRect().top -
     containerDivRect.top +
@@ -395,7 +387,6 @@ function getLineAndCursor() {
     containerDivRect.left -
     3 +
     "px";
-  //getting lines
   const hbythree = parentDivRect.height / 3;
 
   if (parentDivRect.width > 600) {
@@ -419,7 +410,6 @@ function getLineAndCursor() {
   }
 }
 
-// 10. Security Check:
 function checkIfInspected() {
   const currentLetter = document.querySelector(".letter.current");
   if (currentLetter) {
@@ -434,7 +424,6 @@ function checkIfInspected() {
   }
 }
 
-//10b play audio
 function playSound() {
   let audio = new Audio(`../audio/${correctSong.value}`);
   audio.volume = volume.value / 100;
@@ -447,43 +436,22 @@ function playWrong() {
   audio.play();
 }
 
-//12. Progress detected
 function getprogress() {
-  const totalChar = quoteLength + noOfWords - 1;
-  const the_value = (progress / totalChar) * 100;
-  bar.style.width = the_value + "%";
+  // const totalChar = quoteLength + noOfWords - 1;
+  // const the_value = (progress / totalChar) * 100;
+  // bar.style.width = the_value + "%";
 }
 
-// 13(main). Initialize typing function
-
 function initTyping() {
-  if (!isTyping) {
-    timer = setInterval(initTimer, 1000);
-    isTyping = true;
-    leftHeaderContent.classList.add("hidden");
-    header.style.justifyContent = "center";
-    timeWatch.style.color = "#e2b714";
-    cursor.style.animation = "none";
-    timeTaken = new Date();
-  }
   currentWord = document.querySelector(".word.current");
   currentLetter = document.querySelector(".letter.current");
-
   typedChar = inpField.value.split("")[i];
   i++;
-
-  //----------------------game Logic
-
-  // space pressed
   if (typedChar == " ") {
     spacePressed();
-  }
-  //Backspace pressed
-  else if (typedChar == null) {
+  } else if (typedChar == null) {
     backspacePressed();
-  }
-  //currentLetter Exists and pressed
-  else if (currentLetter) {
+  } else if (currentLetter) {
     if (currentLetter.innerText !== typedChar) {
       mistakes++;
       playWrong();
@@ -497,19 +465,14 @@ function initTyping() {
       currentLetter.innerText == typedChar ? "correctText" : "incorrectText"
     );
     removeClass(currentLetter, "current");
-
-    //When the QUOTE ends
     if (!currentLetter.nextSibling && !currentWord.nextElementSibling) {
       endGame();
     }
-
     if (currentLetter.nextSibling) {
       addClass(currentLetter.nextSibling, "current");
     }
     checkIfInspected();
-  }
-  //current letter do not exist
-  else {
+  } else {
     playWrong();
     const incorrectLetter = document.createElement("letter");
     incorrectLetter.innerHTML = typedChar;
@@ -517,31 +480,18 @@ function initTyping() {
     currentWord.appendChild(incorrectLetter);
     mistakes++;
   }
-
-  // move cursor
   cursor.style.transition = "top 0.08s linear, left 0.08s linear";
   getLineAndCursor();
   getprogress();
 }
 
-//********************#3 Time INTERVAL***********************
-
-function initTimer() {
-  timeInc++;
-  minutes = String(Math.trunc(timeInc / 60));
-  secs = String(timeInc % 60);
-  timeWatch.innerHTML = `${minutes.padStart(2, "0")}:${secs.padStart(2, "0")}`;
-}
 //******************** MODALS***********************
 function toggleLeaderboardFunction() {
   LeaderboardModal.classList.toggle("hidden");
 }
-//********************Close summary MODEL***********************
 closeModal.addEventListener("click", closeModalFunction);
 overlay.addEventListener("click", closeModalFunction);
 transparentOverlay.addEventListener("click", closeModalFunction);
-
-//******************** Close Leaderboard model***********************
 closeLeaderboard?.addEventListener("click", function () {
   toggleLeaderboardFunction();
   closeModalFunction();
@@ -564,8 +514,6 @@ closeProfileButton.addEventListener("click", function () {
   userProfileMenu.classList.add("hidden");
   transparentOverlay.classList.add("hidden");
 });
-
-//******************** Close all modals***********************
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") {
     closeModalFunction();

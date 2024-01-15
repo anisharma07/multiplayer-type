@@ -79,7 +79,6 @@
 .progress-bar-container {
   height: 240px;
   overflow-y: scroll;
-  margin-top: 20px;
 }
 .progress-space {
   width: 70%;
@@ -104,19 +103,49 @@
   border-radius: 5px;
   padding: 3px;
   position: relative;
-  margin-bottom: 13px;
+  margin-top: 49px;
 }
 
 .player-name {
   position: absolute;
-  top: 1px;
-  left: -41px;
+  top: -36px;
+  left: 0%;
+  background-color: #f1f1f133;
+  backdrop-filter: blur(10px);
+  padding: 2px;
+  border-radius: 0px;
+  transition: left 0.1s ease;
+}
+/* .player-progress-arrow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #f1f1f133;
+  backdrop-filter: blur(10px);
+  transform: rotate(45deg);
+  top: 27px;
+  right: 22px;
+  margin-left: -6px;
+  z-index: -1;
+} */
+.player-progress-arrow {
+  position: absolute;
+  top: 28px;
+  left: 6px;
+  margin-left: -6px;
+  z-index: -1;
+  width: 0;
+  height: 0;
+  border-left: 0px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 8px solid #f1f1f133;
 }
 .bar-thumb {
-  height: 40px;
+  position: relative;
+  height: 5px;
   border-radius: 5px;
   background-image: linear-gradient(to right, #4caf50, #ffc107);
-  transition: width 0.5s ease;
+  transition: width 0.1s ease;
   width: 0%;
 }
 @media (width<=671px) {

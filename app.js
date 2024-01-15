@@ -6,6 +6,7 @@ const { join } = require("node:path");
 const app = express();
 const server = createServer(app);
 const { Server } = require("socket.io");
+const PORT = process.env.PORT || 3000;
 const { get } = require("http");
 const io = new Server(server);
 // import { users, userJoin } from "./utils/functions";
@@ -60,14 +61,17 @@ io.on("connection", (socket) => {
       user = userJoin(socket.id, formatUsername, 0);
     }
     const usersArr = getRoomUsers();
+    io.emit("add user progress", users);
     io.emit("display board", users);
     io.emit("user joined", `${username} joined the game.`);
     console.log("user-joined");
   });
+
   socket.on("typing score", (wordspermin) => {
     setWordspermin(socket.id, wordspermin);
     io.emit("display board", users);
   });
+
   socket.on("ready status", function () {
     const i = getUserIndex(socket.id);
     users[i].status = true;
@@ -75,14 +79,17 @@ io.on("connection", (socket) => {
       io.emit("start game");
     }
   });
+
   socket.on("not ready", function () {
     const i = getUserIndex(socket.id);
     console.log(i);
     users[i].status = false;
   });
+
   socket.on("progress", (msg) => {
     const index = getUserIndex(socket.id);
-    user[index].progress = Number(msg);
+    users[index].progress = Number(msg);
+    io.emit("user progress", users);
   });
 
   socket.on("disconnect", () => {
@@ -97,6 +104,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3000, () => {
+server.listen(PORT, () => {
   console.log("server running at http://localhost:3000");
 });
