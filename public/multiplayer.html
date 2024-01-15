@@ -91,9 +91,14 @@
     <div class="timer">
       <div class="progress-space">
         <div class="progress-bar-container">
-          <div class="progress-bar">
-            <div class="player-name">YOU:</div>
-            <div class="bar-thumb"></div></div>
+
+          <div id="progress-bar" class="progress-bar">
+            <div class="player-name">
+            <p> YOU:</p> 
+            <div class="player-progress-arrow"></div>
+            </div>
+            <div id ="progress-you" class="bar-thumb"></div></div>
+
         </div>
       </div>
       
@@ -188,9 +193,10 @@
        <!-- blur modal background -->
     <div class="overlay hidden"></div>
     <div class="transparent-overlay hidden"></div>
+
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="js/multiplayer.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/socket.js"></script>
     <!-- <script src="js/quotes.js"></script> -->
     <!-- <script src="js/encodedtype.js"></script> -->
   </body>
