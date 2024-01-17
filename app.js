@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const users = [];
 function userJoin(id, username, wpm) {
-  const user = { id, username, wpm, status: false, progress: 0 };
+  const user = { id, username, wpm, status: false, progress: 0, currWpm: 0 };
   users.push(user);
   return user;
 }
@@ -64,7 +64,7 @@ io.on("connection", (socket) => {
     io.emit("add user progress", users);
     io.emit("display board", users);
     io.emit("user joined", `${username} joined the game.`);
-    console.log("user-joined");
+    console.log("user-joined, " + users.length + " users on server");
   });
 
   socket.on("typing score", (wordspermin) => {
@@ -75,6 +75,7 @@ io.on("connection", (socket) => {
   socket.on("ready status", function () {
     const i = getUserIndex(socket.id);
     users[i].status = true;
+    io.emit("sendStatusReady", socket.id);
     if (users.every((user) => user.status === true)) {
       io.emit("start game");
     }
@@ -82,13 +83,14 @@ io.on("connection", (socket) => {
 
   socket.on("not ready", function () {
     const i = getUserIndex(socket.id);
-    console.log(i);
+    io.emit("sendStatusNotReady", socket.id);
     users[i].status = false;
   });
 
-  socket.on("progress", (msg) => {
+  socket.on("progress", (value, wpm) => {
     const index = getUserIndex(socket.id);
-    users[index].progress = Number(msg);
+    users[index].progress = Number(value);
+    users[index].currWpm = Number(wpm);
     io.emit("user progress", users);
   });
 
@@ -99,7 +101,8 @@ io.on("connection", (socket) => {
       io.emit("user left", `${user.username} left the game`);
       io.emit("game users", usersArr);
       // console.log("user left");
-      console.log("user-left");
+
+      console.log("user-left" + " no. of users on server: " + users.length);
     }
   });
 });

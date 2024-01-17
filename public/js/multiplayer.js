@@ -37,11 +37,9 @@ const contentDiv = document.querySelector(".text-content-div");
 const letterContainer = document.querySelector(".container");
 const CapsLock = document.querySelector(".caps-lock");
 const bar = document.querySelector("#progress-you");
-const correctSong = document.querySelector("#soundSelect");
-const errorSong = document.querySelector("#errorSoundSelect");
-const volume = document.querySelector("#volu");
-const soundsModal = document.getElementById("sound-system");
-const soundModalBtn = document.querySelector(".sound-btn");
+// const volume = document.querySelector("#volu");
+// const soundsModal = document.getElementById("sound-system");
+// const soundModalBtn = document.querySelector(".sound-btn");
 let difficulty = document.getElementById("DifficultySelect");
 let currentWord = document.querySelector(".word.current");
 let currentLetter = document.querySelector(".letter.current");
@@ -104,15 +102,15 @@ inpField.addEventListener("paste", function (event) {
   event.preventDefault();
 });
 
-volume.addEventListener("input", function () {
-  if (volume.value == 0) {
-    soundModalBtn.innerText = "🔇";
-  } else if (volume.value <= 50) {
-    soundModalBtn.innerText = "🔉";
-  } else {
-    soundModalBtn.innerText = "🔊";
-  }
-});
+// volume.addEventListener("input", function () {
+//   if (volume.value == 0) {
+//     soundModalBtn.innerText = "🔇";
+//   } else if (volume.value <= 50) {
+//     soundModalBtn.innerText = "🔉";
+//   } else {
+//     soundModalBtn.innerText = "🔊";
+//   }
+// });
 //testing.
 // header.addEventListener("click", function () {
 //   const html = `      <div class="progress-bar">
@@ -183,9 +181,9 @@ function closeModalFunction() {
   if (!userProfileMenu.classList.contains("hidden")) {
     userProfileMenu.classList.add("hidden");
   }
-  if (!soundsModal.classList.contains("hidden")) {
-    soundsModal.classList.add("hidden");
-  }
+  // if (!soundsModal.classList.contains("hidden")) {
+  //   soundsModal.classList.add("hidden");
+  // }
   if (!transparentOverlay.classList.contains("hidden")) {
     transparentOverlay.classList.add("hidden");
   }
@@ -204,7 +202,7 @@ function showSummary() {
   showWPM.classList.remove("hidden");
   let actualAccuracy = Math.floor(100 - (mistakes / quoteLength) * 100);
   modalwordsCounter.innerHTML = wpm;
-  modalTime.innerHTML = `${Math.floor(timeTaken / 1000)}s`;
+  modalTime.innerHTML = `${120 - timeInc}s`;
   modalAccuracy.innerHTML = `${actualAccuracy > 0 ? actualAccuracy : "0"}%`;
   modalCharacters.innerHTML = `<span style="color: #d4d4d4;">${counter}</span>/${
     quoteLength + noOfWords - 1
@@ -215,7 +213,6 @@ function showSummary() {
 
 function endGame() {
   clearInterval(timer);
-  console.log("cleared interval");
   inpField.removeEventListener("input", initTyping);
   inpField.disabled = true;
   typingText.style.marginTop = "";
@@ -229,6 +226,12 @@ function endGame() {
   showSummary();
   sendUsernameAndHighScore();
   showOnGameEnd();
+  const statuscircle = document.querySelectorAll(".status-circle");
+  statuscircle.forEach(function (div) {
+    if (div.classList.contains("hidden")) {
+      div.classList.remove("hidden");
+    }
+  });
 }
 
 function newGame() {
@@ -265,20 +268,24 @@ function newGame() {
 }
 
 function getWPM() {
-  timeTaken = new Date() - timeTaken;
-  wpm = Math.round((counter / 5) * (60000 / timeTaken));
+  // timeTaken = new Date() - timeTaken;
+  // wpm = Math.round((counter / 5) * (60000 / timeTaken));
 
+  setWPM();
   if (wpm > HighScore) {
     HighScore = wpm;
   }
 }
-
+function setWPM() {
+  const timepassed = 120 - timeInc;
+  wpm = Math.round((counter / 5) * (60 / timepassed));
+}
 function spacePressed() {
   const isFirstLetter = currentLetter === currentWord.firstChild;
   inpField.value = "";
   i = 0;
   if (!isFirstLetter) {
-    playSound();
+    // playSound();
     let expectedEl = currentLetter?.innerHTML ?? " ";
     if (expectedEl !== " ") {
       const lettersMissed = [
@@ -302,16 +309,13 @@ function spacePressed() {
       }
       addClass(currentWord.nextSibling.firstChild, "current");
     } else {
-      getprogress();
-      console.log("ending game");
       endGame();
-      console.log("game Ended");
     }
     cursor.style.transition = "top 0.08s linear, left 0.08s linear";
     getLineAndCursor();
     checkIfInspected();
   } else {
-    playWrong();
+    // playWrong();
   }
 }
 
@@ -323,7 +327,7 @@ function backspacePressed() {
   const previousWord = currentWord.previousSibling;
   const isFirstLetter = currentLetter === currentWord.firstChild;
   if (previousWord || !isFirstLetter) {
-    playSound();
+    // playSound();
   }
   if (currentLetter && isFirstLetter) {
     if (previousWord) {
@@ -424,23 +428,17 @@ function checkIfInspected() {
   }
 }
 
-function playSound() {
-  let audio = new Audio(`../audio/${correctSong.value}`);
-  audio.volume = volume.value / 100;
-  audio.play();
-}
+// function playSound() {
+//   let audio = new Audio(`../audio/${correctSong.value}`);
+//   audio.volume = volume.value / 100;
+//   audio.play();
+// }
 
-function playWrong() {
-  let audio = new Audio(`../audio/error/${errorSong.value}`);
-  audio.volume = volume.value / 100;
-  audio.play();
-}
-
-function getprogress() {
-  // const totalChar = quoteLength + noOfWords - 1;
-  // const the_value = (progress / totalChar) * 100;
-  // bar.style.width = the_value + "%";
-}
+// function playWrong() {
+//   let audio = new Audio(`../audio/error/${errorSong.value}`);
+//   audio.volume = volume.value / 100;
+//   audio.play();
+// }
 
 function initTyping() {
   currentWord = document.querySelector(".word.current");
@@ -454,10 +452,10 @@ function initTyping() {
   } else if (currentLetter) {
     if (currentLetter.innerText !== typedChar) {
       mistakes++;
-      playWrong();
+      // playWrong();
     } else {
       counter++;
-      playSound();
+      // playSound();
     }
     progress++;
     addClass(
@@ -473,7 +471,7 @@ function initTyping() {
     }
     checkIfInspected();
   } else {
-    playWrong();
+    // playWrong();
     const incorrectLetter = document.createElement("letter");
     incorrectLetter.innerHTML = typedChar;
     incorrectLetter.className = "letter incorrectText extra";
@@ -482,7 +480,6 @@ function initTyping() {
   }
   cursor.style.transition = "top 0.08s linear, left 0.08s linear";
   getLineAndCursor();
-  getprogress();
 }
 
 //******************** MODALS***********************
@@ -501,10 +498,10 @@ openLeaderboard?.addEventListener("click", function () {
   overlay.classList.remove("hidden");
 });
 
-soundModalBtn.addEventListener("click", function () {
-  soundsModal.classList.toggle("hidden");
-  transparentOverlay.classList.toggle("hidden");
-});
+// soundModalBtn.addEventListener("click", function () {
+//   soundsModal.classList.toggle("hidden");
+//   transparentOverlay.classList.toggle("hidden");
+// });
 openProfileButton.addEventListener("click", function () {
   userProfileMenu.classList.toggle("hidden");
   transparentOverlay.classList.toggle("hidden");
