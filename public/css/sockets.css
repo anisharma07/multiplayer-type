@@ -148,7 +148,26 @@
   transition: width 0.1s ease;
   width: 0%;
 }
-@media (width<=671px) {
+.status-circle {
+  position: absolute;
+  top: -6px;
+  left: -36px;
+  z-index: 0;
+  width: 24px;
+  height: 24px;
+  background-color: #ff6464;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+.user-curr-wpm {
+  position: absolute;
+  top: -5px;
+  right: -52px;
+  font-size: 13px;
+  background-color: #355533;
+  border-radius: 10px;
+}
+@media (width<=992px) {
   .progress-space {
     width: 100%;
   }

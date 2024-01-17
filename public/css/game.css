@@ -719,9 +719,6 @@ footer {
 }
 
 @media (width<=671px) {
-  .progress-space {
-    width: 100%;
-  }
   .container,
   .timer {
     width: 95%;
